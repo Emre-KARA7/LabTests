@@ -9,8 +9,8 @@ async function bootstrap() {
 
   // Swagger
   const config = new DocumentBuilder()
-    .setTitle('nestCoreProject')
-    .setDescription('The nestCoreProject API description')
+    .setTitle('lab-tests-backend')
+    .setDescription('The lab-tests-backendc API description')
     .setVersion('1.0')
     .addTag('media')
     .addBearerAuth(
