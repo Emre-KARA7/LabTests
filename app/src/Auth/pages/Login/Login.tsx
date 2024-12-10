@@ -23,7 +23,9 @@ const Login: React.FC = () => {
     try {
       console.log(values);
       const response = await postHttp('auth/login', values);
-      console.log(response.data);
+      if (response.data && response.data.access_token) {
+        loginAuth(response.data.access_token);
+      }
     } catch (e) {
       console.log(e);
     }
