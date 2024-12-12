@@ -2,6 +2,7 @@ import {createContext, useContext} from 'react';
 
 interface AuthContextProps {
   tokenAuth: string | null;
+  jwtObj: any | null;
   loginAuth: (token: string) => void;
   logoutAuth: () => void;
 }

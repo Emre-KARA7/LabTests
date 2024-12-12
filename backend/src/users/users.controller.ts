@@ -66,8 +66,8 @@ export class UsersController {
     return this.usersService.remove(id);
   }
 
-  @Roles() // This is a public route
-  @Patch(':id')
+  @Roles('user', 'admin') // This is a public route
+  @Post(':id')
   update(@Body() updateUserDto: UpdateUserDto): Promise<User> {
     return this.usersService.update(updateUserDto);
   }

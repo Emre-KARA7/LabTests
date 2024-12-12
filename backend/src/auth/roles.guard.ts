@@ -30,6 +30,7 @@ export class RolesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
+      console.log('no token');
       throw new UnauthorizedException();
     }
 
@@ -40,6 +41,7 @@ export class RolesGuard implements CanActivate {
       if (
         !requiredRoles.some((requiredRole) => payload.role === requiredRole)
       ) {
+        console.log('no role');
         throw new UnauthorizedException();
       }
 
@@ -47,6 +49,7 @@ export class RolesGuard implements CanActivate {
       // so that we can access it in our route handlers
       request['user'] = payload;
     } catch {
+      console.log('catch');
       throw new UnauthorizedException();
     }
     return true;

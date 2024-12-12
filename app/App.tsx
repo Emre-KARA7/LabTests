@@ -1,22 +1,24 @@
 import React from 'react';
-import {Login, Profile, AuthProvider, useAuth} from './src/Auth';
+import {AuthProvider, useAuth} from './src/Auth';
+import {NavigationContainer} from '@react-navigation/native';
+import { UserRouter, AdminRouter, UnauthRouter } from './src/Router';
 
 function App(): React.JSX.Element {
   return (
-    <AuthProvider>
-      <PageLogic />
-    </AuthProvider>
+    <NavigationContainer>
+      <AuthProvider>
+        <PageLogic />
+      </AuthProvider>
+    </NavigationContainer>
   );
 }
 
 function PageLogic(): React.JSX.Element {
   const {tokenAuth} = useAuth();
   if (tokenAuth) {
-    return (
-      <Profile />
-    );
+    return <UserRouter />;
   } else {
-    return <Login />;
+    return <UnauthRouter />;
   }
 }
 

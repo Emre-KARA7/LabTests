@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.1.102:3000/',
+  baseURL: 'http://192.168.1.103:3000/',
   // use IPv4 address on dev
   // settings>wifi>hardware info>ipv4 address
 });
@@ -16,9 +16,15 @@ export const get = async <T,>(
 export const post = async <T,>(
   url: string,
   data?: any,
-  config?: AxiosRequestConfig,
+  token?: string,
 ): Promise<AxiosResponse<T>> => {
+  if(token){
+   const config = {
+    headers: {Authorization: `Bearer ${token}`},
+  };
   return axiosInstance.post<T>(url, data, config);
+  }
+  return axiosInstance.post<T>(url, data);
 };
 
 export const put = async <T,>(
