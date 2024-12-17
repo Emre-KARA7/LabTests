@@ -7,14 +7,15 @@ import { Guide } from './entities/guide.entity';
 import { AnalytRecord } from './entities/analytRecord.entity';
 import { TestReport } from './entities/testReport.entity';
 import { TestValue } from './entities/testValue.entity';
-// import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
+//
+import { CreateAnalytDto } from './dto/create-analyt.dto';
+import { UpdateAnalytDto } from './dto/update-analyt.dto';
 
 @Injectable()
 export class AnalysisService {
   constructor(
     @InjectRepository(Analyt)
-    private readonly usersRepository: Repository<Analyt>,
+    private readonly analytRepository: Repository<Analyt>,
 
     @InjectRepository(Guide)
     private readonly guideRepository: Repository<Guide>,
@@ -29,20 +30,20 @@ export class AnalysisService {
     private readonly testValueRepository: Repository<TestValue>,
   ) {}
 
-  async createAnalyt(createUserDto: CreateUserDto): Promise<Analyt> {
-    return this.usersRepository.save(createUserDto);
+  async createAnalyt(createAnalytDto: CreateAnalytDto): Promise<Analyt> {
+    return this.analytRepository.save(createAnalytDto);
   }
 
   async findAllAnalyts(): Promise<Analyt[]> {
-    return this.usersRepository.find();
+    return this.analytRepository.find();
   }
 
-  async updateAnalyt(createUserDto: CreateUserDto): Promise<Analyt> {
-    return this.usersRepository.save(createUserDto);
+  async updateAnalyt(updateAnalytDto: UpdateAnalytDto): Promise<Analyt> {
+    return this.analytRepository.save(updateAnalytDto);
   }
 
   // async removeAnalyt(id: number): Promise<void> {
-  //   await this.usersRepository.delete(id);
+  //   await this.analytRepository.delete(id);
   // }
 
   async createGuide(createUserDto: CreateUserDto): Promise<Guide> {
