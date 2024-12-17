@@ -10,6 +10,8 @@ import { TestValue } from './entities/testValue.entity';
 //
 import { CreateAnalytDto } from './dto/create-analyt.dto';
 import { UpdateAnalytDto } from './dto/update-analyt.dto';
+import { CreateGuideDto } from './dto/create-guide.dto';
+import { UpdateGuideDto } from './dto/update-guide.dto';
 
 @Injectable()
 export class AnalysisService {
@@ -46,16 +48,16 @@ export class AnalysisService {
   //   await this.analytRepository.delete(id);
   // }
 
-  async createGuide(createUserDto: CreateUserDto): Promise<Guide> {
-    return this.guideRepository.save(createUserDto);
+  async createGuide(createGuideDto: CreateGuideDto): Promise<Guide> {
+    return this.guideRepository.save(createGuideDto);
   }
 
   async findAllGuides(): Promise<Guide[]> {
     return this.guideRepository.find();
   }
 
-  async updateGuide(createUserDto: CreateUserDto): Promise<Guide> {
-    return this.guideRepository.save(createUserDto);
+  async updateGuide(updateGuideDto: UpdateGuideDto): Promise<Guide> {
+    return this.guideRepository.save(updateGuideDto);
   }
 
   // async removeGuide(id: number): Promise<void> {
