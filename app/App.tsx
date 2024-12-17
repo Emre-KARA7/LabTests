@@ -1,25 +1,29 @@
 import React from 'react';
 import {AuthProvider, useAuth} from './src/Auth';
 import {NavigationContainer} from '@react-navigation/native';
-import { UserRouter, AdminRouter, UnauthRouter } from './src/Router';
+import {UserRouter, AdminRouter, UnauthRouter} from './src/Router';
 
-function App(): React.JSX.Element {
-  return (
+const App: React.FC = () => (
+  <AuthProvider>
     <NavigationContainer>
-      <AuthProvider>
-        <PageLogic />
-      </AuthProvider>
+      <PageLogic />
     </NavigationContainer>
-  );
-}
+  </AuthProvider>
+);
 
-function PageLogic(): React.JSX.Element {
-  const {tokenAuth} = useAuth();
-  if (tokenAuth) {
-    return <UserRouter />;
-  } else {
+const PageLogic: React.FC = () => {
+  const {tokenAuth, jwtObj} = useAuth();
+
+  console.log('jwtObj', jwtObj);
+  console.log('tokenAuth', tokenAuth);
+
+  if (tokenAuth === null) {
     return <UnauthRouter />;
+  } else if (jwtObj.role === 'admin') {
+    return <AdminRouter />;
+  } else {
+    return <UserRouter />;
   }
-}
+};
 
 export default App;

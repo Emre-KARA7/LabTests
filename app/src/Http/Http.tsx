@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://192.168.1.103:3000/',
+  baseURL: 'http://192.168.1.104:3000/',
   // use IPv4 address on dev
   // settings>wifi>hardware info>ipv4 address
 });
