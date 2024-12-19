@@ -15,7 +15,7 @@ export class TestReport {
   samplingTime: Date;
 
   @Column()
-  SampleAcceptanceTime: Date;
+  sampleAcceptanceTime: Date;
 
   @Column()
   expertApprovalTime: Date;
