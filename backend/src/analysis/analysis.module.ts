@@ -1,15 +1,29 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { HashModule } from '../hash/hash.module';
-import { User } from './entities/user.entity';
-import { UsersService } from './users.service';
-import { UsersController } from './users.controller';
+// entities
+import { Analyt } from './entities/analyt.entity';
+import { Guide } from './entities/guide.entity';
+import { AnalytRecord } from './entities/analytRecord.entity';
+import { TestReport } from './entities/testReport.entity';
+import { TestValue } from './entities/testValue.entity';
+// services
+import { AnalysisService } from './analysis.service';
+// controllers
+import { AnalysisController } from './analysis.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), HashModule],
-  providers: [UsersService],
-  controllers: [UsersController],
-  exports: [UsersService],
+  imports: [
+    TypeOrmModule.forFeature([
+      Analyt,
+      Guide,
+      AnalytRecord,
+      TestReport,
+      TestValue,
+    ]),
+  ],
+  providers: [AnalysisService],
+  controllers: [AnalysisController],
+  exports: [AnalysisService],
 })
 export class UsersModule {}

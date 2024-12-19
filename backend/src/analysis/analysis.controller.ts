@@ -30,7 +30,7 @@ import { CreateTestValueDto } from './dto/create-testValue.dto';
 import { UpdateTestValueDto } from './dto/update-testValue.dto';
 
 @Controller('analysis')
-export class UsersController {
+export class AnalysisController {
   constructor(private readonly analysisService: AnalysisService) {}
 
   @Post('/create-analyt')
