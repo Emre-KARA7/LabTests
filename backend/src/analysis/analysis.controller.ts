@@ -7,155 +7,175 @@ import {
   Post,
   ParseIntPipe,
 } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-// import { GetUserDto } from './dto/get-user.dto';
+import { ApiResponse, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { Roles } from '../auth/decorators/roles.decorator';
+// entities
 import { Analyt } from './entities/analyt.entity';
 import { Guide } from './entities/guide.entity';
 import { AnalytRecord } from './entities/analytRecord.entity';
-import { UsersService } from './analysis.service';
+import { AnalysisService } from './analysis.service';
 import { TestReport } from './entities/testReport.entity';
 import { TestValue } from './entities/testValue.entity';
-import { ApiResponse, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import { Roles } from '../auth/decorators/roles.decorator';
+// DTO's
+import { CreateAnalytDto } from './dto/create-analyt.dto';
+import { UpdateAnalytDto } from './dto/update-analyt.dto';
+import { CreateGuideDto } from './dto/create-guide.dto';
+import { UpdateGuideDto } from './dto/update-guide.dto';
+import { CreateAnalytRecordDto } from './dto/create-analytRecord.dto';
+import { UpdateAnalytRecordDto } from './dto/update-analytRecord.dto';
+import { SearchAnalytRecordDto } from './dto/search-analytRecord.dto';
+import { CreateTestReportDto } from './dto/create-testReport.dto ';
+import { UpdateTestReportDto } from './dto/update-testReport.dto';
+import { CreateTestValueDto } from './dto/create-testValue.dto';
+import { UpdateTestValueDto } from './dto/update-testValue.dto';
 
-@Controller('users')
+@Controller('analysis')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly analysisService: AnalysisService) {}
 
   @Post('/create-analyt')
   @Roles('admin')
-  createAnalyt(@Body() createUserDto: CreateUserDto): Promise<Analyt> {
-    return this.usersService.createAnalyt(createUserDto);
+  createAnalyt(@Body() createAnalytDto: CreateAnalytDto): Promise<Analyt> {
+    return this.analysisService.createAnalyt(createAnalytDto);
   }
 
   @Get('/get-all-analyts')
   @Roles() // This is a public route
   findAllAnalyts(): Promise<Analyt[]> {
-    return this.usersService.findAllAnalyts();
+    return this.analysisService.findAllAnalyts();
   }
 
   @Post('/update-analyt')
   @Roles('admin')
-  updateAnalyt(@Body() createUserDto: CreateUserDto): Promise<Analyt> {
-    return this.usersService.updateAnalyt(createUserDto);
+  updateAnalyt(@Body() updateAnalytDto: UpdateAnalytDto): Promise<Analyt> {
+    return this.analysisService.updateAnalyt(updateAnalytDto);
   }
 
   // @Delete('/delete-analyt/:id')
   // @Roles('admin')
   // removeAnalyt(@Param('id', ParseIntPipe) id: number): Promise<void> {
-  //   return this.usersService.removeAnalyt(id);
+  //   return this.analysisService.removeAnalyt(id);
   // }
   ///
 
   @Post('/create-guide')
   @Roles('admin')
-  createGuide(@Body() createUserDto: CreateUserDto): Promise<Guide> {
-    return this.usersService.createGuide(createUserDto);
+  createGuide(@Body() createGuideDto: CreateGuideDto): Promise<Guide> {
+    return this.analysisService.createGuide(createGuideDto);
   }
 
   @Get('/get-all-guides')
   @Roles() // This is a public route
   findAllGuides(): Promise<Guide[]> {
-    return this.usersService.findAllGuides();
+    return this.analysisService.findAllGuides();
   }
 
   @Post('/update-guide')
   @Roles('admin')
-  updateGuide(@Body() createUserDto: CreateUserDto): Promise<Guide> {
-    return this.usersService.updateGuide(createUserDto);
+  updateGuide(@Body() updateGuideDto: UpdateGuideDto): Promise<Guide> {
+    return this.analysisService.updateGuide(updateGuideDto);
   }
 
   // @Delete('/delete-guide/:id')
   // @Roles('admin')
   // removeGuide(@Param('id', ParseIntPipe) id: number): Promise<void> {
-  //   return this.usersService.removeGuide(id);
+  //   return this.analysisService.removeGuide(id);
   // }
   ///
 
   @Post('/create-analyt-record')
   @Roles('admin')
   createAnalytRecord(
-    @Body() createUserDto: CreateUserDto,
+    @Body() createAnalytRecordDto: CreateAnalytRecordDto,
   ): Promise<AnalytRecord> {
-    return this.usersService.createAnalytRecord(createUserDto);
+    return this.analysisService.createAnalytRecord(createAnalytRecordDto);
   }
 
   @Get('/get-all-analyt-records')
   @Roles() // This is a public route
   findAllAnalytRecords(): Promise<AnalytRecord[]> {
-    return this.usersService.findAllAnalytRecords();
+    return this.analysisService.findAllAnalytRecords();
   }
 
   @Get('/search-analyt-records')
   @Roles() // This is a public route
-  searchAnalytRecords(): Promise<AnalytRecord[]> {
-    return this.usersService.searchAnalytRecords();
+  searchAnalytRecords(
+    @Body() searchAnalytRecordDto: SearchAnalytRecordDto,
+  ): Promise<AnalytRecord[]> {
+    return this.analysisService.searchAnalytRecords(searchAnalytRecordDto);
   }
 
   @Post('/update-analyt-record')
   @Roles('admin')
   updateAnalytRecord(
-    @Body() createUserDto: CreateUserDto,
+    @Body() updateAnalytRecordDto: UpdateAnalytRecordDto,
   ): Promise<AnalytRecord> {
-    return this.usersService.updateAnalytRecord(createUserDto);
+    return this.analysisService.updateAnalytRecord(updateAnalytRecordDto);
   }
 
   // @Delete('/delete-analyt-record/:id')
   // @Roles('admin')
   // removeAnalytRecord(@Param('id', ParseIntPipe) id: number): Promise<void> {
-  //   return this.usersService.removeAnalytRecord(id);
+  //   return this.analysisService.removeAnalytRecord(id);
   // }
 
   ///
 
   @Post('/create-test-report')
   @Roles('admin')
-  createTestReport(@Body() createUserDto: CreateUserDto): Promise<TestReport> {
-    return this.usersService.createTestReport(createUserDto);
+  createTestReport(
+    @Body() createTestReportDto: CreateTestReportDto,
+  ): Promise<TestReport> {
+    return this.analysisService.createTestReport(createTestReportDto);
   }
 
   @Get('/get-all-test-reports')
   @Roles() // This is a public route
   findAllTestReports(): Promise<TestReport[]> {
-    return this.usersService.findAllTestReports();
+    return this.analysisService.findAllTestReports();
   }
 
   @Post('/update-test-report')
   @Roles('admin')
-  updateTestReport(@Body() createUserDto: CreateUserDto): Promise<TestReport> {
-    return this.usersService.updateTestReport(createUserDto);
+  updateTestReport(
+    @Body() updateTestReportDto: UpdateTestReportDto,
+  ): Promise<TestReport> {
+    return this.analysisService.updateTestReport(updateTestReportDto);
   }
 
   // @Delete('/delete-TestReport/:id')
   // @Roles('admin')
   // removeTestReport(@Param('id', ParseIntPipe) id: number): Promise<void> {
-  //   return this.usersService.removeTestReport(id);
+  //   return this.analysisService.removeTestReport(id);
   // }
   ///
 
   @Post('/create-test-value')
   @Roles('admin')
-  createTestValue(@Body() createUserDto: CreateUserDto): Promise<TestValue> {
-    return this.usersService.createTestValue(createUserDto);
+  createTestValue(
+    @Body() createTestValueDto: CreateTestValueDto,
+  ): Promise<TestValue> {
+    return this.analysisService.createTestValue(createTestValueDto);
   }
 
   @Get('/get-all-test-values')
   @Roles() // This is a public route
   findAllTestValues(): Promise<TestValue[]> {
-    return this.usersService.findAllTestValues();
+    return this.analysisService.findAllTestValues();
   }
 
   @Post('/update-test-value')
   @Roles('admin')
-  updateTestValue(@Body() createUserDto: CreateUserDto): Promise<TestValue> {
-    return this.usersService.updateTestValue(createUserDto);
+  updateTestValue(
+    @Body() updateTestValueDto: UpdateTestValueDto,
+  ): Promise<TestValue> {
+    return this.analysisService.updateTestValue(updateTestValueDto);
   }
 
   // @Delete('/delete-test-value/:id')
   // @Roles('admin')
   // removeTestValue(@Param('id', ParseIntPipe) id: number): Promise<void> {
-  //   return this.usersService.removeTestValue(id);
+  //   return this.analysisService.removeTestValue(id);
   // }
   ///
 }
