@@ -12,6 +12,9 @@ import { CreateAnalytDto } from './dto/create-analyt.dto';
 import { UpdateAnalytDto } from './dto/update-analyt.dto';
 import { CreateGuideDto } from './dto/create-guide.dto';
 import { UpdateGuideDto } from './dto/update-guide.dto';
+import { CreateAnalytRecordDto } from './dto/create-analytRecord.dto';
+import { UpdateAnalytRecordDto } from './dto/update-analytRecord.dto';
+import { SearchAnalytRecordDto } from './dto/search-analytRecord.dto';
 
 @Injectable()
 export class AnalysisService {
@@ -65,9 +68,9 @@ export class AnalysisService {
   // }
 
   async createAnalytRecord(
-    createUserDto: CreateUserDto,
+    createAnalytRecordDto: CreateAnalytRecordDto,
   ): Promise<AnalytRecord> {
-    return this.analytRecordRepository.save(createUserDto);
+    return this.analytRecordRepository.save(createAnalytRecordDto);
   }
 
   async findAllAnalytRecords(): Promise<AnalytRecord[]> {
@@ -75,15 +78,18 @@ export class AnalysisService {
   }
 
   async updateAnalytRecord(
-    createUserDto: CreateUserDto,
+    updateAnalytRecordDto: UpdateAnalytRecordDto,
   ): Promise<AnalytRecord> {
-    return this.analytRecordRepository.save(createUserDto);
+    return this.analytRecordRepository.save(updateAnalytRecordDto);
   }
 
   async searchAnalytRecords(
-    createUserDto: CreateUserDto,
+    searchAnalytRecordDto: SearchAnalytRecordDto,
   ): Promise<AnalytRecord[]> {
-    return this.analytRecordRepository.find(createUserDto);
+    // rewrite this method
+    const { guideId, analytId, dayMin, dayMax } = searchAnalytRecordDto;
+    //return this.analytRecordRepository.find(searchAnalytRecordDto);
+    return guideId as any;
   }
 
   // async removeAnalytRecord(id: number): Promise<void> {
