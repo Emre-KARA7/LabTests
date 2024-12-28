@@ -26,4 +26,4 @@ import { AnalysisController } from './analysis.controller';
   controllers: [AnalysisController],
   exports: [AnalysisService],
 })
-export class UsersModule {}
+export class AnalysisModule {}

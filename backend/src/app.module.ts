@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
 
+import { AnalysisModule } from './analysis/analysis.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { RolesGuard } from './auth/roles.guard';
@@ -35,6 +36,7 @@ import { AppService } from './app.service';
     }),
     UsersModule,
     AuthModule,
+    AnalysisModule,
   ],
   controllers: [AppController],
   providers: [

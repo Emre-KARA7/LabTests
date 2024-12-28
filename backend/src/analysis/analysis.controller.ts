@@ -1,13 +1,10 @@
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  ParseIntPipe,
-} from '@nestjs/common';
-import { ApiResponse, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+  ApiResponse,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Roles } from '../auth/decorators/roles.decorator';
 // entities
 import { Analyt } from './entities/analyt.entity';
@@ -29,22 +26,47 @@ import { UpdateTestReportDto } from './dto/update-testReport.dto';
 import { CreateTestValueDto } from './dto/create-testValue.dto';
 import { UpdateTestValueDto } from './dto/update-testValue.dto';
 
+@ApiTags('Analysis')
 @Controller('analysis')
 export class AnalysisController {
   constructor(private readonly analysisService: AnalysisService) {}
 
+  @ApiBearerAuth('JWT-auth')
+  @ApiResponse({
+    status: 200,
+    type: Analyt,
+  })
+  @ApiOperation({
+    summary: 'This Endpoint Creates a Analyt',
+  })
   @Post('/create-analyt')
   @Roles('admin')
   createAnalyt(@Body() createAnalytDto: CreateAnalytDto): Promise<Analyt> {
     return this.analysisService.createAnalyt(createAnalytDto);
   }
 
+  @ApiBearerAuth('JWT-auth')
+  @ApiResponse({
+    status: 200,
+    type: Analyt,
+  })
+  @ApiOperation({
+    summary: 'This Endpoint Returns all Analyts',
+  })
   @Get('/get-all-analyts')
   @Roles() // This is a public route
   findAllAnalyts(): Promise<Analyt[]> {
     return this.analysisService.findAllAnalyts();
   }
 
+  @ApiBearerAuth('JWT-auth')
+  @ApiResponse({
+    status: 200,
+    type: Analyt,
+  })
+  @ApiOperation({
+    summary: 'This Endpoint Returns updated Analyt',
+  })
   @Post('/update-analyt')
   @Roles('admin')
   updateAnalyt(@Body() updateAnalytDto: UpdateAnalytDto): Promise<Analyt> {

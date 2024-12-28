@@ -5,9 +5,11 @@ import {Formik, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import {postHttp} from '../../../Http';
 import {useAuth} from './../../context/AuthContext';
+import {useNavigation} from '@react-navigation/native';
 
 const Login: React.FC = () => {
   const {loginAuth} = useAuth();
+  const navigation = useNavigation();
 
   const initialValues = {
     email: '',
@@ -33,6 +35,8 @@ const Login: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Dont have an account? </Text>
+      <Button title="Sign up" onPress={() => navigation.navigate('Signup' as never)} />
       <Text style={styles.title}>Login</Text>
       <Formik
         initialValues={initialValues}
