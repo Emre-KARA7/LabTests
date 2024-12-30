@@ -9,9 +9,11 @@ import {useNavigation} from '@react-navigation/native';
 
 const Signup: React.FC = () => {
   const {loginAuth} = useAuth();
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const initialValues = {
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
   };
@@ -19,24 +21,23 @@ const Signup: React.FC = () => {
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email format').required('Required'),
     password: Yup.string().required('Required'),
+    firstName: Yup.string().required('Required'),
+    lastName: Yup.string().required('Required'),
   });
 
   const onSubmit = async (values: {email: string; password: string}) => {
     try {
       console.log(values);
-      const response = await postHttp('user', values);
-      if (response.data && response.data.access_token) {
-        loginAuth(response.data.access_token);
-      }
+      const response = await postHttp('users', values);
+      console.log(response.data);
     } catch (e) {
       console.log(e);
     }
   };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Alteady have an account? </Text>
-     <Button title="Login" onPress={() => navigation.goBack()} />
+      <Button title="Login" onPress={() => navigation.goBack()} />
 
       <Text style={styles.title}>Sign Up</Text>
       <Formik
@@ -45,6 +46,35 @@ const Signup: React.FC = () => {
         onSubmit={onSubmit}>
         {({handleChange, handleBlur, handleSubmit, values}) => (
           <View>
+            <View style={styles.inputContainer}>
+              <Text>First Name</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={handleChange('firstName')}
+                onBlur={handleBlur('firstName')}
+                value={values.firstName}
+              />
+              <ErrorMessage
+                name="firstName"
+                component={Text}
+                style={styles.errorText}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text>Last Name</Text>
+              <TextInput
+                style={styles.input}
+                onChangeText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
+                value={values.lastName}
+              />
+              <ErrorMessage
+                name="lastName"
+                component={Text}
+                style={styles.errorText}
+              />
+            </View>
             <View style={styles.inputContainer}>
               <Text>Email</Text>
               <TextInput

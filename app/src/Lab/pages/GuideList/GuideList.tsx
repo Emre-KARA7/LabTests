@@ -1,47 +1,52 @@
 import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
-import styles from './AnalytList.styles';
+import styles from './GuideList.styles';
 import {getHttp} from '../../../Http';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 
-const AnalytList: React.FC = () => {
+const GuideList: React.FC = () => {
   const navigation = useNavigation();
-  const [analytList, setAnalytList] = useState(
+  const [guideList, setGuideList] = useState(
     [] as {id: number; name: string}[],
   );
   useEffect(() => {
-    getAnalytList();
+    getGuideList();
   }, []);
 
   useFocusEffect(
     useCallback(() => {
-      getAnalytList();
+      getGuideList();
     }, []),
   );
 
-  const getAnalytList = async () => {
+  const getGuideList = async () => {
     try {
-      const response = await getHttp('analysis/get-all-analyts');
-      setAnalytList(response.data as {id: number; name: string}[]);
+      const response = await getHttp('analysis/get-all-guides');
+      setGuideList(response.data as {id: number; name: string}[]);
     } catch (e) {
       console.log(e);
     }
   };
 
   const renderItem = ({item}: {item: {id: number; name: string}}) => (
-    <View style={styles.analyt} key={item.id}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('AnalytRecordList', {guide: item});
+      }}
+      style={styles.analyt}
+      key={item.id}>
       <Text style={styles.analytName}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
-
+  console.log(guideList);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Analit</Text>
-      {analytList.length === 0 ? (
-        <Text style={styles.analyt}>Analit yaratılmamışdır</Text>
+      <Text style={styles.title}>Guide</Text>
+      {guideList.length === 0 ? (
+        <Text style={styles.GuideList}>Guide yaratılmamışdır</Text>
       ) : (
         <FlatList
-          data={analytList}
+          data={guideList}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
           showsVerticalScrollIndicator={false}
@@ -49,11 +54,11 @@ const AnalytList: React.FC = () => {
       )}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => navigation.navigate('AnalytCreate' as never)}>
+        onPress={() => navigation.navigate('GuideCreate' as never)}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default AnalytList;
+export default GuideList;

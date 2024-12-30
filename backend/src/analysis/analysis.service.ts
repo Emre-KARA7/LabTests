@@ -92,8 +92,14 @@ export class AnalysisService {
   ): Promise<AnalytRecord[]> {
     // rewrite this method
     const { guideId, analytId, dayMin, dayMax } = searchAnalytRecordDto;
-    //return this.analytRecordRepository.find(searchAnalytRecordDto);
-    return guideId as any;
+    const searchresults = await this.analytRecordRepository.find({
+      where: {
+        guideId: guideId,
+        analytId: analytId,
+      },
+    });
+
+    return searchresults;
   }
 
   // async removeAnalytRecord(id: number): Promise<void> {

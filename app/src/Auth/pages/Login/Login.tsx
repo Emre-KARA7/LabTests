@@ -36,7 +36,10 @@ const Login: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dont have an account? </Text>
-      <Button title="Sign up" onPress={() => navigation.navigate('Signup' as never)} />
+      <Button
+        title="Sign up"
+        onPress={() => navigation.navigate('Signup' as never)}
+      />
       <Text style={styles.title}>Login</Text>
       <Formik
         initialValues={initialValues}
@@ -53,11 +56,7 @@ const Login: React.FC = () => {
                 value={values.email}
                 keyboardType="email-address"
               />
-              <ErrorMessage
-                name="email"
-                component={Text}
-                style={styles.errorText}
-              />
+              <ErrorMessage name="email" component={Text} />
             </View>
             <View style={styles.inputContainer}>
               <Text>Password</Text>
@@ -68,11 +67,7 @@ const Login: React.FC = () => {
                 value={values.password}
                 secureTextEntry
               />
-              <ErrorMessage
-                name="password"
-                component={Text}
-                style={styles.errorText}
-              />
+              <ErrorMessage name="password" component={Text} />
             </View>
             <Button onPress={handleSubmit as any} title="Login" />
           </View>

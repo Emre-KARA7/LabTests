@@ -38,4 +38,7 @@ export default StyleSheet.create({
   analytName: {
     fontSize: 18,
   },
+  GuideList: {
+    textAlign: 'center',
+  },
 });

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import {
   ApiResponse,
   ApiOperation,
@@ -122,7 +122,7 @@ export class AnalysisController {
   @Get('/search-analyt-records')
   @Roles() // This is a public route
   searchAnalytRecords(
-    @Body() searchAnalytRecordDto: SearchAnalytRecordDto,
+    @Query() searchAnalytRecordDto: SearchAnalytRecordDto,
   ): Promise<AnalytRecord[]> {
     return this.analysisService.searchAnalytRecords(searchAnalytRecordDto);
   }
