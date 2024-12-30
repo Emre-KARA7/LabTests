@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { AnalytRecord } from './analytRecord.entity';
 
 @Entity()
 export class Guide {
@@ -7,4 +8,7 @@ export class Guide {
 
   @Column()
   name: string;
+
+  @OneToMany(() => AnalytRecord, (record) => record.guide)
+  records: AnalytRecord[];
 }

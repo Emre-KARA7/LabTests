@@ -1,5 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { AnalytRecord } from './analytRecord.entity';
 @Entity()
 export class Analyt {
   @PrimaryGeneratedColumn()
@@ -7,4 +7,7 @@ export class Analyt {
 
   @Column({ unique: true })
   name: string;
+
+  @OneToMany(() => AnalytRecord, (record) => record.analyt)
+  records: AnalytRecord[];
 }

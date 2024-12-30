@@ -74,7 +74,29 @@ export class AnalysisService {
   async createAnalytRecord(
     createAnalytRecordDto: CreateAnalytRecordDto,
   ): Promise<AnalytRecord> {
-    return this.analytRecordRepository.save(createAnalytRecordDto);
+    const { analytId, guideId, ...recordData } = createAnalytRecordDto;
+
+    const analyt = await this.analytRepository.findOne({
+      where: { id: analytId },
+    });
+    if (!analyt) {
+      throw new Error('Analyt not found');
+    }
+
+    const guide = await this.guideRepository.findOne({
+      where: { id: guideId },
+    });
+    if (!guide) {
+      throw new Error('Guide not found');
+    }
+
+    const analytRecord = this.analytRecordRepository.create({
+      ...recordData,
+      analyt,
+      guide,
+    });
+
+    return this.analytRecordRepository.save(analytRecord);
   }
 
   async findAllAnalytRecords(): Promise<AnalytRecord[]> {
@@ -94,11 +116,11 @@ export class AnalysisService {
     const { guideId, analytId, dayMin, dayMax } = searchAnalytRecordDto;
     const searchresults = await this.analytRecordRepository.find({
       where: {
-        guideId: guideId,
-        analytId: analytId,
+        guide: { id: guideId },
       },
+      relations: ['guide', 'analyt'],
     });
-
+    console.log(searchresults);
     return searchresults;
   }
 

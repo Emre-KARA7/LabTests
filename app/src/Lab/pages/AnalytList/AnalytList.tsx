@@ -2,10 +2,19 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import styles from './AnalytList.styles';
 import {getHttp} from '../../../Http';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {
+  useNavigation,
+  useFocusEffect,
+  useRoute,
+} from '@react-navigation/native';
 
 const AnalytList: React.FC = () => {
+  const route = useRoute();
+  const {guide} = route.params as {guide: {id: number; name: string}};
   const navigation = useNavigation();
+  const [selectedAnalyt, setSelectedAnalyt] = useState(
+    {} as {id: number; name: string},
+  );
   const [analytList, setAnalytList] = useState(
     [] as {id: number; name: string}[],
   );
@@ -29,14 +38,22 @@ const AnalytList: React.FC = () => {
   };
 
   const renderItem = ({item}: {item: {id: number; name: string}}) => (
-    <View style={styles.analyt} key={item.id}>
-      <Text style={styles.analytName}>{item.name}</Text>
-    </View>
+    <TouchableOpacity
+      onPress={() => {
+        setSelectedAnalyt(item);
+      }}
+      style={styles.analyt}
+      key={item.id}>
+      <Text style={styles.analytName}>
+        {item.id === selectedAnalyt.id ? '✔️ ' : null}
+        {item.name}
+      </Text>
+    </TouchableOpacity>
   );
-
+  console.log('selectedAnalyt', selectedAnalyt);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Analit</Text>
+      <Text style={styles.title}>Analit Sec</Text>
       {analytList.length === 0 ? (
         <Text style={styles.analyt}>Analit yaratılmamışdır</Text>
       ) : (
@@ -52,6 +69,18 @@ const AnalytList: React.FC = () => {
         onPress={() => navigation.navigate('AnalytCreate' as never)}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
+      {selectedAnalyt.id ? (
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={() =>
+            navigation.navigate('AnalytRecordCreate', {
+              guide,
+              analyt: selectedAnalyt,
+            })
+          }>
+          <Text style={styles.addButtonText}>➡</Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
