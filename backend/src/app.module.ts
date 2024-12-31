@@ -24,7 +24,7 @@ import { AppService } from './app.service';
       port: 5432,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
-      database: 'testdb',
+      database: 'labtestsdb',
       autoLoadEntities: true,
       synchronize: true, // make it false in production !!!
       migrationsTableName: 'migration_records',

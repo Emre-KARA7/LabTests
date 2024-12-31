@@ -27,21 +27,21 @@ export class AnalytRecord {
   @Column()
   dayMax: number;
 
-  @Column()
+  @Column({ type: 'float' })
   arithmeticMin: number;
 
-  @Column()
+  @Column({ type: 'float' })
   arithmeticMax: number;
 
-  @Column()
+  @Column({ type: 'float' })
   geometricMin: number;
 
-  @Column()
+  @Column({ type: 'float' })
   geometricMax: number;
 
-  @Column()
+  @Column({ type: 'float' })
   min: number;
 
-  @Column()
+  @Column({ type: 'float' })
   max: number;
 }

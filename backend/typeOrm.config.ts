@@ -9,7 +9,7 @@ export default new DataSource({
   // port: parseInt(process.env.TYPEORM_PORT),
   username: 'postgres', // that must be from env
   password: 'postgres',
-  database: 'testdb',
+  database: 'labtestsdb',
   entities: [User],
   migrations: [MName1723565357703],
 });

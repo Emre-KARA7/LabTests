@@ -1,13 +1,13 @@
 import React from 'react';
 import {View, Text, TextInput, Button} from 'react-native';
-import styles from './GuideCreate.styles';
+import styles from './AnalytCreate.styles';
 import {Formik, ErrorMessage} from 'formik';
 import * as Yup from 'yup';
 import {postHttp} from '../../../Http';
 import {useAuth} from '../../../Auth';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const GuideCreate: React.FC = () => {
+const AnalytCreate: React.FC = () => {
   const {tokenAuth} = useAuth();
   const navigation = useNavigation();
   const initialValues = {
@@ -20,12 +20,14 @@ const GuideCreate: React.FC = () => {
 
   const onSubmit = async (values: {name: string}) => {
     try {
+      console.log(values);
       const response = await postHttp(
-        'analysis/create-guide',
+        'analysis/create-analyt',
         values,
         tokenAuth as string,
       );
-      navigation.navigate('AnalytRecordList', {guide: response.data});
+      navigation.goBack();
+      console.log(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -33,7 +35,7 @@ const GuideCreate: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Kılavuz Olustur</Text>
+      <Text style={styles.title}>Analit Olustur</Text>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -62,4 +64,4 @@ const GuideCreate: React.FC = () => {
   );
 };
 
-export default GuideCreate;
+export default AnalytCreate;

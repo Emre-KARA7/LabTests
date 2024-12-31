@@ -120,7 +120,6 @@ export class AnalysisService {
       },
       relations: ['guide', 'analyt'],
     });
-    console.log(searchresults);
     return searchresults;
   }
 
